@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int maxSubarrayLength(vector<int>& nums, int k) {
+        std::ios_base::sync_with_stdio(false);
+        std::cin.tie(NULL); std::cout.tie(NULL);
+
+
+        int n=nums.size();
+        unordered_map<int,int> m;
+        int i=0,j=0,ans=0;
+
+        while(j<n){
+            m[nums[j]]++;
+
+            while(i<j && m[nums[j]]>k){
+                m[nums[i]]--;
+                i++;
+            }
+
+            ans=max(ans,j-i+1);
+            j++;
+        }
+
+        return ans;
+    }
+};
+
+//-------------------------------------------------------------------------------------------
+//1. We are gonna use sliding window approach, where `i` and `j` are the left and right pointers.
+//2. We are going to use a map to keep track of frequency of elements in the window.
+//3. We will now update the frequency of the element at `jth` index.
+//4. Let's say if we encounter a element whose frequency goes beyond `k` then we will move the `i` pointer to the right and update the frequency of element in the window.
+//5. Then we are gonna update our `ans`, which would be max of either `ans` or `j-i+1`, which basically gives us the number of elements in the current window.
+//6. Finally, we are gonna return `ans`.
