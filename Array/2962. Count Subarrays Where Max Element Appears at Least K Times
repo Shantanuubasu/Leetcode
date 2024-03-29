@@ -1,0 +1,37 @@
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int k) {
+        ios::sync_with_stdio(false);  
+        cin.tie(nullptr);            
+        cout.tie(nullptr); 
+
+        int n=nums.size();
+        int maxi=*max_element(begin(nums),end(nums));
+        int i=0,j=0;
+        long long int ans=0;
+        int maxicount=0;
+        while(j<n){
+            if(nums[j]==maxi){
+                maxicount++;
+            }
+            while(maxicount>=k){
+                ans+=n-j;
+
+                if(nums[i]==maxi){
+                    maxicount--;
+                }
+                i++;
+            }
+            j++;
+        }
+
+        return ans;
+    }
+};
+
+//------------------------------------------------------------------------
+//1. We will solve using sliding window approach, `i` and `j` are the left and right pointers, `maxi` contains the max element in the array, `maxicount` stores the frequency of max element in the current window.
+//2. We will start by moving `j` to the right and update the count of `maxi` if it appears again.
+//3. If we get the `count of maxi >=k` then we will add `n-j` to the answer. `n-j` represents all the possible valid subarray that can be made from the given position of `j`.
+//4. Now we will move `i` to the right if the current element at `i` is `maxi` then moving it to the right will take `maxi` out of the window so we decrement the count of `maxi`.
+//5. Finally, we will return `ans`.
