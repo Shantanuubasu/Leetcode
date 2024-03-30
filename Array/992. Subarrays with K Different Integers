@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int slidingwindow(vector<int>&nums, int k){
+        int n=nums.size();
+        int i=0,j=0,count=0;
+        unordered_map<int,int> m;
+        while(j<n){
+            m[nums[j]]++;
+
+            while(m.size()>k){
+                m[nums[i]]--;
+
+                if(m[nums[i]]==0){
+                    m.erase(nums[i]);
+                }
+                i++;
+            }
+
+            count+=(j-i+1);
+            j++;
+        }
+
+        return count;
+    }
+
+
+    int subarraysWithKDistinct(vector<int>& nums, int k) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(nullptr);
+        return slidingwindow(nums,k)-slidingwindow(nums,k-1);
+    }
+};
+
+//------------------------------------------------------------------------
+//1. This problem can be solved using sliding window approach, we take `i` and `j` as left and right pointers of the window.
+//2. The `slidingwindow()` function return the number of valid subarrays for values `<=k`.
+//3. We use an unordered map to track the frequency of numbers in the current window.
+//4. If size of map `m` goes beyond `k`, we will move `i` pointer to the right as we don't need subarrays for values `>k`.
+//5. we add `j-i+1` to the count, as it gives all the possible subarrays within the window.
+//6. In `subarraysWithKDistinct()` we call `slidingwindow()`, once with `k` and other time with `k-1` because we don't need subarrays with values `<k`.
