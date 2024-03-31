@@ -1,0 +1,6 @@
+# Write your MySQL query statement below
+select * from Cinema where id%2!=0 AND description!='boring' order by rating desc
+
+
+-----------------------------------------------------------------------------------
+--We need to print the movies with odd id and description not boring in descending order of their ratings.
