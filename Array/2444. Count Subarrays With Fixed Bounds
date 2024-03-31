@@ -1,0 +1,36 @@
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int minK, int maxK) {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+        cout.tie(nullptr);
+
+        long long ans=0;
+        long long minKpos=-1;
+        long long maxKpos=-1;
+        long long cultpos=-1;
+
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i]<minK || nums[i]>maxK){
+                cultpos=i;
+            }
+            if(nums[i]==minK){
+                minKpos=i;
+            }
+            if(nums[i]==maxK){
+                maxKpos=i;
+            }
+
+            int small=min(minKpos,maxKpos);
+            int temp=small-cultpos;
+            ans+=(temp<0) ? 0:temp;
+        }
+
+        return ans;
+    }
+};
+
+//----------------------------------------------------
+//1. `minKpos` keeps track of the index at which `minK` is. `maxKpos` keeps track of the index at which `maxK` is and `cultpos` keeps track of the index at which the element is either `<minK or >maxK`.
+//2. We then find the minimum of `minKpos` and `maxKpos` as `small`.
+//3. We will find the difference of `small` and `cultpos` in `temp`, if `temp<0` then we will add `0` to answer because that means it is not a valid subarray, otherwise we will value of `temp`.
