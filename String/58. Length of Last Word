@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        
+        int last_word=0;
+        for(int i=s.length()-1; i>=0; i--){
+            if(s[i]==' ' && last_word==0){
+                continue;
+            }
+            if(s[i]==' ' && last_word!=0){
+                return last_word;
+            }
+            if(s[i]!=' '){
+                last_word++;
+            }
+        }
+        return last_word;
+    }
+};
+
+//-------------------------------------------------------------------------------------------------
+//1. To find the length of last word we will traverse the string from the back.
+//2. If the character at i is a widespace and length of last_word=0 then we wil continue.
+//3. If the character is a widespace but last_word!=0 then we return the last_word. It means that we have already calculated the length of the last word.
+//4. If the character is not a widespace then we will incement the value of last_word.
+//5. Finally, we will return last_word.
