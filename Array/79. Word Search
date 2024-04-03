@@ -1,0 +1,55 @@
+class Solution {
+public:
+    int m,n;
+    vector<vector<int>> dir{{1,0},{-1,0},{0,1},{0,-1}};
+    bool find(vector<vector<char>>& board,int i,int j, int ind, string& word){
+        if(ind==word.length()){
+            return true;
+        }
+
+        if(i<0 || j<0 || i>=n || j>=m || board[i][j]!=word[ind]){
+            return false;
+        }
+
+        char temp=board[i][j];
+        board[i][j]='@';
+
+        for(auto &id:dir){
+            int newi=i+id[0];
+            int newj=j+id[1];
+            
+            if(find(board,newi,newj,ind+1,word)){
+                return true;
+            }
+        }
+
+        board[i][j]=temp;
+        return false;
+    }
+
+    bool exist(vector<vector<char>>& board, string word) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(nullptr);
+        cout.tie(nullptr);
+
+        n=board.size();
+        m=board[0].size();
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(board[i][j]==word[0] && find(board,i,j,0,word)){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+};
+
+//------------------------------------------------------------------------------------
+//1. To solve this problem we will use backtracking approach, in the `find()`, we will check if the current index `ind` is equal to length of `word`, if yes then we return `true` because we have found all the characters in the `board`.
+//2. If `i` and `j` go out of bounds or `board[i][j]!=word[ind]` then we return `false` because the element cannot be found.
+//3. We will store the the element at `board[i][j]` in `temp` and replace it with `@`.
+//4. We have defined the vector `dir` which gives us the directions in which we can move in the board so we update the `i` and `j` accordingly.
+//5. We replace the element at `board[i][j]` with its original content stored in `temp`.
