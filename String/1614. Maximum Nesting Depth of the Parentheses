@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int maxDepth(string s) {
+        int open=0,ans=0;
+
+        for(char &ch: s){
+            if(ch=='('){
+                open++;
+            }
+            else if(ch==')'){
+                open--;
+            }
+
+            ans=max(ans,open);
+        }
+
+        return ans;
+    }
+};
+
+//--------------------------------------------------------------------------------
+//1. To solve this problem we will keep a track of open brackets in variable `open`.
+//2. If we get `(` in the string `s` then we increment `open`.
+//3. If we get `)` in the string `s` then we decrement `open`.
+//4. `ans` will store the max of `ans` and `open`.
+//5. Finally, return `ans`.
