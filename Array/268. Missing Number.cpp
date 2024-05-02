@@ -24,3 +24,21 @@ Otherwise, we will return `nums.size()` because the only possibility now is that
 
 //APPROACH-2-SUM OF NATURAL NUMBERS
 
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        int n=nums.size();
+        int sum=(n*(n+1))/2;
+        return sum-accumulate(nums.begin(),nums.end(),0);
+    }
+};
+
+//------------------------------------------------------------------------------
+/* In this problem, we have to find the missing number from the given array.
+So for the given range we will first find the sum of all the elements using the formula `(n*(n+1))/2`.
+After that we find the sum of all the elements in the given array using `accumulate()`.
+Now we will return the subtraction of both the sums which will give us the missing element. */
+
+
