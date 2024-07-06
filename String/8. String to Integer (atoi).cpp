@@ -1,3 +1,5 @@
+// APPROACH - 1 - ITERATIVE
+
 class Solution {
 public:
     int myAtoi(string s) {
@@ -45,3 +47,60 @@ public:
 5. If ans is greater than INT_MAX then return INT_MAX.
 6. If ans is less than INT_MIN then return INT_MIN.
 7. Finally return integer ans. */
+//---------------------------------------------------------------------------------------------
+
+// APPROACH - 2 - RECURSIVE
+
+class Solution {
+public:
+    int solveAtoi(string s, int sign, int i, long long int res){
+        if(sign*res>=INT_MAX){
+            return INT_MAX;
+        }
+
+        if(sign*res<=INT_MIN){
+            return INT_MIN;
+        }
+
+        if(s[i]==' ' || !isdigit(s[i])){
+            return sign*res;
+        }
+
+        return solveAtoi(s, sign, i+1, res*10+(s[i]-'0'));
+    }
+    int myAtoi(string s) {
+        ios_base::sync_with_stdio(false);
+
+        int sign=1;
+        int flag=0;
+        int i=0;
+
+        while(i<s.size() && s[i]==' '){
+            i++;
+        }
+
+        if(s[i]=='-'){
+            sign=-1;
+            flag++;
+            i++;
+        }
+        if(s[i]=='+'){
+            sign=1;
+            flag++;
+            i++;
+        }
+
+        if(flag>1){
+            return 0;
+        }
+
+        return solveAtoi(s, sign, i , 0);
+    }
+};
+
+//---------------------------------------------------------------------
+/* 1. We will first move past all the whitespaces at the front then we will check for the sign of the number if incase both the signs are present then we return 0.
+2. In solveAtoi(), we check if sign*res is greater than INT_MAX then return INT_MAX.
+3. If sign*res is less than INT_MIN then return INT_MIN.
+4. If we get any non-digit element or whitespace then we return res*sign.
+5. Otherwise we call the function again with i as i+1 and res as res*10+(s[i]-'0'). */
